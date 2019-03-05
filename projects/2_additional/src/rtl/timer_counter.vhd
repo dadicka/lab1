@@ -74,8 +74,16 @@ process (clk_i,rst_i) begin
 		end if;			
 end process;
 
-led_o <= counter_for_h_s when button_hour_i = '1' else
-			counter_for_min_s when button_min_i = '1' else
-			counter_value_s;
+process(counter_for_min_s,counter_for_h_s,counter_value_s,button_min_i, button_hour_i) begin
+	if(button_min_i = '1') then
+		led_o <= counter_for_min_s;
+	elsif (button_hour_i = '1') then
+		led_o <= counter_for_h_s;
+	else
+		led_o<= counter_value_s;
+	end if;		
+end process;
+
+
 
 END rtl;
